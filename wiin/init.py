@@ -23,4 +23,6 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 api = restful.Api(app)
 db = SQLAlchemy(app)
 
-manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
+manager = flask.ext.restless.APIManager(
+    app, flask_sqlalchemy_db=db,
+)
