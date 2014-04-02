@@ -1,3 +1,5 @@
 *.py[oc]
 .idea/*
 *~
+dist/*
+MANIFEST
