@@ -14,11 +14,20 @@ from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://db_user:db_pw@localhost:5432/db_name'
+
 app.config['SQLALCHEMY_BINDS'] = {
     'db1': app.config['SQLALCHEMY_DATABASE_URI'],
 }
+
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+
+try:
+    from local_settings import *
+    app.config.update(config)
+except ImportError:
+    pass
+
 
 api = restful.Api(app)
 db = SQLAlchemy(app)

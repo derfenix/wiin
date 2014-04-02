@@ -91,7 +91,7 @@ class Posts(db.Model):
     api_version = (1,)
 
     id = db.Column(db.Integer, db.Sequence('posts_id_seq'), primary_key=True)
-    brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
+    brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'))
     title = db.Column(db.Unicode(500), nullable=False)
     text = db.Column(db.Unicode, nullable=False)
     url = db.Column(db.Unicode(600))
