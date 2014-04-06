@@ -11,7 +11,7 @@ from wiin.init import manager, app
 import wiin.models
 from wiin.tools import build_api
 
-manager = build_api(manager)
+build_api(manager)
 
 if __name__ == "__main__":
     app.run(debug=True)

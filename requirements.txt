@@ -1,0 +1,9 @@
+SQLAlchemy>=0.9
+psycopg2
+Flask_Restless
+Flask_Social
+flask>=0.10
+python_dateutil>2.0
+mimerender>=0.5.2
+Flask_SQLAlchemy
+-e git+https://github.com/pythonforfacebook/facebook-sdk.git#egg=facebook_sdk

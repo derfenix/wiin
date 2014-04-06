@@ -7,7 +7,10 @@
 """
 import datetime
 
+from flask.ext.security import UserMixin
+
 from wiin.init import db
+from wiin.tools import auth_func
 
 
 brand_likes = db.Table(
@@ -35,16 +38,18 @@ posts_links_followed = db.Table(
 )
 
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     __tablename__ = 'users'
     __bind_key__ = 'db1'
     api_version = (1,)
 
     id = db.Column(db.Integer, db.Sequence('users_id_seq'), primary_key=True)
+    fb_id = db.Column(db.Unicode(255), nullable=False, unique=True)
     name = db.Column(db.Unicode(300), nullable=False)
     email = db.Column(db.Unicode(254), nullable=False)
     created = db.Column(db.TIMESTAMP, nullable=False)
     auth_key = db.Column(db.Unicode(254))
+    active = db.Column(db.Boolean())
     brands_likes = db.relationship(
         'Brands', secondary=brand_likes, backref=db.backref('users_likes', lazy='dynamic'),
         lazy='dynamic'
@@ -61,7 +66,8 @@ class Users(db.Model):
         'Comments', backref='user', lazy='dynamic'
     )
 
-    def __init__(self, name, email, auth_key):
+    def __init__(self, fb_id, name, email, auth_key):
+        self.fb_id = fb_id
         self.name = name
         self.email = email
         self.auth_key = auth_key
@@ -89,6 +95,7 @@ class Posts(db.Model):
     __tablename__ = 'posts'
     __bind_key__ = 'db1'
     api_version = (1,)
+    preprocessors = {'GET_MANY': [auth_func]}
 
     id = db.Column(db.Integer, db.Sequence('posts_id_seq'), primary_key=True)
     brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'))
@@ -130,3 +137,5 @@ class Comments(db.Model):
         self.user_id = user_id
         self.text = text
         self.created = datetime.datetime.now()
+
+

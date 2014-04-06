@@ -13,6 +13,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'qwqeqr4trg'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://db_user:db_pw@localhost:5432/db_name'
 
 app.config['SQLALCHEMY_BINDS'] = {
@@ -21,6 +23,11 @@ app.config['SQLALCHEMY_BINDS'] = {
 
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+
+app.config['FACEBOOK'] = {
+    'consumer_key': '304948042989420',
+    'consumer_secret': 'f6cbc476953f11542729dbab5346593a'
+}
 
 try:
     from local_settings import *
