@@ -21,7 +21,7 @@ app.config['SQLALCHEMY_BINDS'] = {
     'db1': app.config['SQLALCHEMY_DATABASE_URI'],
 }
 
-app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = False
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 app.config['FACEBOOK'] = {

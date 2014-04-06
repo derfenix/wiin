@@ -28,13 +28,15 @@ brand_follows = db.Table(
 posts_likes = db.Table(
     'posts_likes',
     db.Column('post_id', db.Integer, db.ForeignKey('posts.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'))
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    info={'bind_key': 'db1'}
 )
 
 posts_links_followed = db.Table(
     'posts_links_followed',
     db.Column('post_id', db.Integer, db.ForeignKey('posts.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'))
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    info={'bind_key': 'db1'}
 )
 
 
@@ -42,6 +44,7 @@ class Users(db.Model, UserMixin):
     __tablename__ = 'users'
     __bind_key__ = 'db1'
     api_version = (1,)
+    exclude_columns = ('auth_key', 'fb_id')
 
     id = db.Column(db.Integer, db.Sequence('users_id_seq'), primary_key=True)
     fb_id = db.Column(db.Unicode(255), nullable=False, unique=True)
@@ -71,6 +74,7 @@ class Users(db.Model, UserMixin):
         self.name = name
         self.email = email
         self.auth_key = auth_key
+        self.active = True
         self.created = datetime.datetime.now()
 
 
@@ -122,11 +126,11 @@ class Posts(db.Model):
 
 
 class Comments(db.Model):
-    __tablename__ = 'comments'
+    __tablename__ = 'posts_comments'
     __bind_key__ = 'db1'
     api_version = (1,)
 
-    id = db.Column(db.Integer, db.Sequence('comments_id_seq'), primary_key=True)
+    id = db.Column(db.Integer, db.Sequence('posts_comments_id_seq'), primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     text = db.Column(db.Unicode, nullable=False)

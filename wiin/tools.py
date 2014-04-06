@@ -60,7 +60,7 @@ def login():
             user.auth_key = access_token
         else:
             user = users(fb_id=str(profile["id"]), name=profile["name"], email=profile['email'],
-                         auth_key=access_token, active=True)
+                         auth_key=access_token)
 
         db.session.add(user)
         db.session.commit()

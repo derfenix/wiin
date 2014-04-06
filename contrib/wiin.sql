@@ -33,7 +33,10 @@ CREATE TABLE public.users(
 	email varchar(254) NOT NULL,
 	created timestamp NOT NULL,
 	auth_key varchar(254) NOT NULL,
-	CONSTRAINT users_id PRIMARY KEY (id)
+	fb_id varchar(255) NOT NULL,
+	active boolean DEFAULT True,
+	CONSTRAINT users_id PRIMARY KEY (id),
+	CONSTRAINT users_fb_id_uniq UNIQUE (fb_id)
 
 );
 -- ddl-end --
@@ -136,8 +139,8 @@ ALTER TABLE public.posts OWNER TO wiin;
 -- object: public.posts_likes | type: TABLE --
 -- DROP TABLE public.posts_likes;
 CREATE TABLE public.posts_likes(
-	post_id serial NOT NULL,
-	user_id serial NOT NULL
+	post_id integer NOT NULL,
+	user_id integer NOT NULL
 );
 -- ddl-end --
 ALTER TABLE public.posts_likes OWNER TO wiin;
@@ -278,9 +281,15 @@ ON DELETE CASCADE ON UPDATE NO ACTION;
 -- ddl-end --
 
 
--- object: grant_625fb5f28a | type: PERMISSION --
+-- object: grant_a4289a447d | type: PERMISSION --
 GRANT CREATE,USAGE
    ON SCHEMA public
+   TO wiin WITH GRANT OPTION;
+-- ddl-end --
+
+-- object: grant_043e54b245 | type: PERMISSION --
+GRANT CREATE,CONNECT,TEMPORARY
+   ON DATABASE wiin
    TO wiin WITH GRANT OPTION;
 -- ddl-end --
 
