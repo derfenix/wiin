@@ -16,13 +16,15 @@ from wiin.tools import auth_func
 brand_likes = db.Table(
     'brand_likes',
     db.Column('brand_id', db.Integer, db.ForeignKey('brands.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'))
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    info={'bind_key': 'db1'}
 )
 
 brand_follows = db.Table(
     'brand_follows',
     db.Column('brand_id', db.Integer, db.ForeignKey('brands.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'))
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    info={'bind_key': 'db1'}
 )
 
 posts_likes = db.Table(
@@ -44,6 +46,9 @@ class Users(db.Model, UserMixin):
     __tablename__ = 'users'
     __bind_key__ = 'db1'
     api_version = (1,)
+    preprocessors = {'GET_MANY': [auth_func], 'GET_SINGLE': [auth_func],
+                     'PUT_SINGLE': [auth_func], 'PUT_MANY': [auth_func],
+                     'POST': [auth_func], "DELETE": [auth_func]}
     exclude_columns = ('auth_key', 'fb_id')
 
     id = db.Column(db.Integer, db.Sequence('users_id_seq'), primary_key=True)
@@ -82,6 +87,9 @@ class Brands(db.Model):
     __tablename__ = 'brands'
     __bind_key__ = 'db1'
     api_version = (1,)
+    preprocessors = {'GET_MANY': [auth_func], 'GET_SINGLE': [auth_func],
+                     'PUT_SINGLE': [auth_func], 'PUT_MANY': [auth_func],
+                     'POST': [auth_func], "DELETE": [auth_func]}
 
     id = db.Column(db.Integer, db.Sequence('brands_id_seq'), primary_key=True)
     name = db.Column(db.Unicode(300), nullable=False)
@@ -99,7 +107,9 @@ class Posts(db.Model):
     __tablename__ = 'posts'
     __bind_key__ = 'db1'
     api_version = (1,)
-    preprocessors = {'GET_MANY': [auth_func]}
+    preprocessors = {'GET_MANY': [auth_func], 'GET_SINGLE': [auth_func],
+                     'PUT_SINGLE': [auth_func], 'PUT_MANY': [auth_func],
+                     'POST': [auth_func], "DELETE": [auth_func]}
 
     id = db.Column(db.Integer, db.Sequence('posts_id_seq'), primary_key=True)
     brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'))
@@ -129,6 +139,9 @@ class Comments(db.Model):
     __tablename__ = 'posts_comments'
     __bind_key__ = 'db1'
     api_version = (1,)
+    preprocessors = {'GET_MANY': [auth_func], 'GET_SINGLE': [auth_func],
+                     'PUT_SINGLE': [auth_func], 'PUT_MANY': [auth_func],
+                     'POST': [auth_func], "DELETE": [auth_func]}
 
     id = db.Column(db.Integer, db.Sequence('posts_comments_id_seq'), primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))

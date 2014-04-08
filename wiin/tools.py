@@ -119,20 +119,27 @@ def build_api(manager, version=1):
         if hasattr(model, 'api_version') and version in model.api_version:
             kwargs = {}
 
+            # list of columns, that should be responsed. By default - all fields responsed
             include_columns = getattr(model, 'include_columns', False)
             if include_columns:
                 kwargs['include_columns'] = include_columns
 
+            # list of fields, that should be hidden from response
             exclude_columns = getattr(model, 'exclude_columns', False)
             if exclude_columns:
                 kwargs['exclude_columns'] = exclude_columns
 
+            # Allow modify many records at once
+            # PUT /api/v1/users {'email':'new@email.em'}
             allow_patch_many = getattr(model, 'allow_patch_many', False)
             kwargs['allow_patch_many'] = allow_patch_many
 
+            # Available methods for this API endpoint
             methods = getattr(model, 'methods', ['GET'])
             kwargs['methods'] = methods
 
+            # List of preproccessors for endpoint. For details see
+            # https://flask-restless.readthedocs.org/en/latest/customizing.html#request-preprocessors-and-postprocessors
             preprocessors = getattr(model, 'preprocessors', False)
             if preprocessors:
                 kwargs['preprocessors'] = preprocessors

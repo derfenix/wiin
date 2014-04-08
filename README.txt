@@ -19,6 +19,40 @@ Install package
 ---------------
 >>> pip install /path/to/wiin-x.y.z.tar.gz
 
+-------------
+Configuration
+-------------
+Configuration file /etc/wiin.cfg::
+   
+   [Main]
+   SECRET_KEY = 45rtyjhgfre56yujhgds4656uyjhgfdert5ry6u # Random string for encryptions 
+   SQLALCHEMY_DATABASE_URI = postgres://db_user:db_pw@localhost:5432/db_name
+   SQLALCHEMY_DATABASE_URI_DB1 = # By default == SQLALCHEMY_DATABASE_URI
+   SQLALCHEMY_DATABASE_URI_DB2 =
+   SQLALCHEMY_DATABASE_URI_DB3 =
+   SQLALCHEMY_DATABASE_URI_DB4 =
+   SQLALCHEMY_ECHO = False # Echo sql statements to stdout for debugging
+   SQLALCHEMY_COMMIT_ON_TEARDOWN = True # Autocommit on finish each request
+
+   [FACEBOOK]
+   CONSUMER_KEY = # Facebook application key
+   CONSUMER_SECRET = # Facebook application secret key
+
+----------------
+Install database
+----------------
+::
+
+/usr/bin/wiin_init_db.py
+
+------------
+Start server
+------------
+
+>>> /usr/bin/wiin_server.py [host] [port]
+
+*host* and *port* are optional. Defaults is 127.0.0.1 and 5000
+
 =============
 API ACCESSING
 =============
@@ -69,3 +103,9 @@ Store **access_token** (and **uid** if will used more secure version of authenti
 **access_token** (and **uid**) should be appended to each request in GET params ::
 
 /api/v1/posts?access_token=CAAEVWTZCGZC2wBAAmijvdzLNwlV4D0O03R0woz7IZBl9zFxZBXe67ajXI7wYXmWBGHJDNk1RabYMdny0ADr57SMuotpEVHvfkCudychFJumlsys5F6J2O35aVyynfJdsHDVHIYhhq5DbEHllYGYyEpZAUX5tBJ9SwRKtjK0lQ7qKDszKuPJQV
+
+If you'll get on any request this response::
+
+   {"message": "Not Authorized"}
+
+it is mean, that there is not access_token is not set or is invalid. You should login again and appen received access_token to requests.

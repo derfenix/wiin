@@ -1,3 +1,4 @@
+#!python2
 # -*- coding: utf-8 -*-
 """
 .. module: server
@@ -10,8 +11,18 @@ from wiin.init import manager, app
 # noinspection PyUnresolvedReferences
 import wiin.models
 from wiin.tools import build_api
+import sys
 
 build_api(manager)
 
+host = None
+port = None
+if len(sys.argv) > 1:
+    if len(sys.argv) >= 2:
+        host = sys.argv[1]
+
+        if len(sys.argv) >= 3:
+            port = int(sys.argv[2])
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host=host, port=port, debug=True)
