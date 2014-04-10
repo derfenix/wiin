@@ -29,8 +29,8 @@ def auth_func(*args, **kwargs):
     # user = users.query.filter_by(auth_key=access_token, id=uid, active=True).first()
 
     if not user:
-        raise ProcessingException(message='Not Authorized',
-                                  status_code=401)
+        raise ProcessingException(description='Not Authorized',
+                                  code=401)
 
 
 @app.route('/api/v1/login')
@@ -135,7 +135,8 @@ def build_api(manager, version=1):
             kwargs['allow_patch_many'] = allow_patch_many
 
             # Available methods for this API endpoint
-            methods = getattr(model, 'methods', ['GET'])
+            # After development phase - leave just GET by default
+            methods = getattr(model, 'methods', ['GET', 'POST', 'PUT', 'DELETE'])
             kwargs['methods'] = methods
 
             # List of preproccessors for endpoint. For details see

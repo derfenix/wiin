@@ -1,6 +1,6 @@
 SQLAlchemy>=0.9
 psycopg2
-Flask_Restless
+Flask_Restless==0.13.0
 Flask_Social
 flask>=0.10
 python_dateutil>2.0

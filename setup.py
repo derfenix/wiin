@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='wiin',
-    version='0.1.3',
+    version='0.1.7',
     packages=['wiin'],
     url='https://www.odesk.com/users/~01286f3481df6273cb',
     install_requires=open('./requirements.txt', 'r').readlines(),

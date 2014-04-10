@@ -15,8 +15,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 
 prefix = getattr(sys, "prefix")
-if prefix == '/user':
-    prefix = '/'
+if prefix == '/usr':
+    prefix = ''
 config = ConfigParser.ConfigParser()
 config.read(['wiin.cfg', prefix + '/etc/wiin.cfg'])
 
@@ -28,9 +28,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.get('Main', 'SQLALCHEMY_DATABASE_
 app.config['SQLALCHEMY_BINDS'] = {
     'db1': config.get('Main', 'SQLALCHEMY_DATABASE_URI_DB1',
                       app.config['SQLALCHEMY_DATABASE_URI']),
-    'db2': config.get('Main', 'SQLALCHEMY_DATABASE_URI_DB2'),
-    'db3': config.get('Main', 'SQLALCHEMY_DATABASE_URI_DB3'),
-    'db4': config.get('Main', 'SQLALCHEMY_DATABASE_URI_DB4'),
+    # 'db2': config.get('Main', 'SQLALCHEMY_DATABASE_URI_DB2', None),
+    # 'db3': config.get('Main', 'SQLALCHEMY_DATABASE_URI_DB3', None),
+    # 'db4': config.get('Main', 'SQLALCHEMY_DATABASE_URI_DB4', None),
 }
 app.config['SQLALCHEMY_ECHO'] = config.get('Main', 'SQLALCHEMY_ECHO')
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = config.get('Main', 'SQLALCHEMY_COMMIT_ON_TEARDOWN')
@@ -38,13 +38,6 @@ app.config['FACEBOOK'] = {
     'consumer_key': config.get('FACEBOOK', 'consumer_key'),
     'consumer_secret': config.get('FACEBOOK', 'consumer_secret')
 }
-
-try:
-    from local_settings import *
-
-    app.config.update(config)
-except ImportError:
-    pass
 
 api = restful.Api(app)
 db = SQLAlchemy(app)

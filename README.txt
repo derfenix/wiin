@@ -59,15 +59,80 @@ API ACCESSING
 ---------
 Endpoints
 ---------
-``GET /api/v1/users           get all users``
+``GET /api/v1/users           get all users`` ::
 
-``GET /api/v1/users/1         get user with id=1``
+    {
+      "num_results": 1,
+      "objects": [
+        {
+          "active": true,
+          "brands_follows": [],
+          "brands_likes": [],
+          "comments": [],
+          "created": "2014-04-10T11:04:32.360794",
+          "email": "abraham@lincoln.com",
+          "id": 1,
+          "name": "Abraham Lincoln",
+          "posts_likes": [],
+          "posts_links_followed": []
+        }
+      ],
+      "page": 1,
+      "total_pages": 1
+    }
+
+``GET /api/v1/users/1         get user with id=1`` ::
+
+    {
+      "active": true,
+      "brands_follows": [],
+      "brands_likes": [],
+      "comments": [],
+      "created": "2014-04-10T11:04:32.360794",
+      "email": "abraham@lincoln.com",
+      "id": 1,
+      "name": "Abraham Lincoln",
+      "posts_likes": [],
+      "posts_links_followed": []
+    }
 
 ``PUT/PATCH /api/v1/users/1   change user with id=1``
 
+``{"email": "new@email.com"}`` ::
+
+    {
+      "active": true,
+      "brands_follows": [],
+      "brands_likes": [],
+      "comments": [],
+      "created": "2014-04-10T11:04:32.360794",
+      "email": "new@mail.com",
+      "id": 1,
+      "name": "Abraham Lincoln",
+      "posts_likes": [],
+      "posts_links_followed": []
+    }
+
 ``POST /api/v1/users          add new user``
 
-``DELETE /api/v1/users        delete user``
+``{"email": "user101@mail.com", "name": "Superman", "fb_id":123456, "auth_key": "wertyuiop"}`` ::
+
+    {
+      "active": true,
+      "brands_follows": [],
+      "brands_likes": [],
+      "comments": [],
+      "created": "2014-04-10T12:21:00.895737",
+      "email": "user101@mail.com",
+      "id": 2,
+      "name": "Superman",
+      "posts_likes": [],
+      "posts_links_followed": []
+    }
+
+``DELETE /api/v1/users        delete user`` ::
+
+    No response body
 
 --------------------
 Queryies and filters

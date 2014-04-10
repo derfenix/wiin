@@ -846,10 +846,73 @@ CONSUMER_SECRET = # Facebook application secret key
 <div class="section" id="endpoints">
 <h2>Endpoints</h2>
 <p><tt class="docutils literal">GET /api/v1/users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; get all users</tt></p>
+<pre class="literal-block">{
+  "num_results": 1,
+  "objects": [
+    {
+      "active": true,
+      "brands_follows": [],
+      "brands_likes": [],
+      "comments": [],
+      "created": "2014-04-10T11:04:32.360794",
+      "email": "abraham@lincoln.com",
+      "id": 1,
+      "name": "Abraham Lincoln",
+      "posts_likes": [],
+      "posts_links_followed": []
+    }
+  ],
+  "page": 1,
+  "total_pages": 1
+}
+</pre>
 <p><tt class="docutils literal">GET /api/v1/users/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; get user with id=1</tt></p>
+<pre class="literal-block">{
+  "active": true,
+  "brands_follows": [],
+  "brands_likes": [],
+  "comments": [],
+  "created": "2014-04-10T11:04:32.360794",
+  "email": "abraham@lincoln.com",
+  "id": 1,
+  "name": "Abraham Lincoln",
+  "posts_likes": [],
+  "posts_links_followed": []
+}
+</pre>
 <p><tt class="docutils literal">PUT/PATCH /api/v1/users/1&nbsp;&nbsp; change user with id=1</tt></p>
+<p><tt class="docutils literal">{"email": "new@email.com"}</tt></p>
+<pre class="literal-block">{
+  "active": true,
+  "brands_follows": [],
+  "brands_likes": [],
+  "comments": [],
+  "created": "2014-04-10T11:04:32.360794",
+  "email": "new@mail.com",
+  "id": 1,
+  "name": "Abraham Lincoln",
+  "posts_likes": [],
+  "posts_links_followed": []
+}
+</pre>
 <p><tt class="docutils literal">POST /api/v1/users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add new user</tt></p>
+<p><tt class="docutils literal">{"email": "user101@mail.com", "name": "Superman", <span class="pre">"fb_id":123456,</span> "auth_key": "wertyuiop"}</tt></p>
+<pre class="literal-block">{
+  "active": true,
+  "brands_follows": [],
+  "brands_likes": [],
+  "comments": [],
+  "created": "2014-04-10T12:21:00.895737",
+  "email": "user101@mail.com",
+  "id": 2,
+  "name": "Superman",
+  "posts_likes": [],
+  "posts_links_followed": []
+}
+</pre>
 <p><tt class="docutils literal">DELETE /api/v1/users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delete user</tt></p>
+<pre class="literal-block">No response body
+</pre>
 </div>
 <div class="section" id="queryies-and-filters">
 <h2>Queryies and filters</h2>

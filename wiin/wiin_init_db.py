@@ -9,6 +9,4 @@
 from wiin.models import *
 
 if __name__ == "__main__":
-    db.engine.execute('SET CONSTRAINTS ALL DEFERRED;')
     db.create_all(bind='db1')
-    db.engine.execute('SET CONSTRAINTS ALL IMMEDIATE;')
