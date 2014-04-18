@@ -5,8 +5,10 @@
 
 .. moduleauthor:: derfenix <derfenix@gmail.com>
 """
+import hashlib
 import inspect
 import json
+import random
 import sys
 import urllib
 import urlparse
@@ -147,3 +149,26 @@ def build_api(manager, version=1):
 
             manager.create_api(model, url_prefix='/api/v{0}'.format(version), **kwargs)
 
+
+def random_string(l=16):
+    chars = 'qwertyuiopasdfghjklzxcvbnm123456789!@#$%^&*()<>'
+    s = ''
+    for i in xrange(0, l):
+        s += random.choice(chars)
+    return s
+
+
+def make_password(raw_password, salt=None):
+    if salt is None:
+        salt = random_string(16)
+    h = hashlib.sha256()
+    h.update(raw_password)
+    h.update(salt)
+    h.update(app.config.get('SECRET_KEY'))
+    return "sha256:{salt}:{hex}".format(salt=salt, hex=h.hexdigest())
+
+
+def check_password(password_from_db, raw_string):
+    _algo, salt, password_hash = password_from_db.split(':')
+    password = make_password(raw_string, salt)
+    return password == password_hash

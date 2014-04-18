@@ -7,25 +7,30 @@
 """
 
 from flask import render_template, flash, redirect
-from flask.ext.login import current_user
+from flask.ext.login import current_user, login_user
 from flask.globals import request
 
-from wiin.frontend.forms import LoginForm
+from wiin.frontend.auth import User
+from wiin.frontend.forms import LoginForm, RegistrationForm
 from wiin.init import app
+from wiin.tools import make_password
 
 
 @app.route('/')
 def index():
-    print current_user
     return render_template('index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
-    if request.method == 'POST':
-        if form.validate():
-            flash('Login requested for OpenID=')
+    if form.validate_on_submit():
+        password = make_password(form.password.data)
+        email = form.email.data
+        user = User.authenticate(email, password)
+        if user:
+            login_user(user)
+            flash('Login successful')
             return redirect('/')
         else:
             flash('Login failed!')
@@ -34,4 +39,9 @@ def login():
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
-    pass
+    form = RegistrationForm(request.form)
+    if form.validate_on_submit():
+        user = User.create(form)
+        login_user(user)
+
+    return render_template('registration.html', form=form)

@@ -3,6 +3,7 @@ psycopg2
 Flask_Restless==0.13.0
 Flask_Social
 flask>=0.10
+flask_wtf==0.9.3
 python_dateutil>2.0
 mimerender>=0.5.2
 Flask_SQLAlchemy

@@ -6,7 +6,7 @@
 
 .. moduleauthor:: derfenix <derfenix@gmail.com>
 """
-from wiin.init import manager, app
+from wiin.init import manager, config
 
 # noinspection PyUnresolvedReferences
 import wiin.models
@@ -27,4 +27,4 @@ if len(sys.argv) > 1:
             port = int(sys.argv[2])
 
 if __name__ == "__main__":
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=port, debug=config.getboolean('Main', 'DEBUG'))

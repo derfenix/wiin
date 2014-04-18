@@ -5,6 +5,7 @@
 {% block content %}
     <h1>Sign In</h1>
     <form action="" method="post" name="login">
+        {{ form.csrf_token }}
         {% from "_helpers.html" import render_field %}
         <div>
             <input type="button" value="Login with facebook"/>

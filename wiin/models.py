@@ -52,7 +52,8 @@ class Users(db.Model, UserMixin):
     exclude_columns = ('auth_key', 'fb_id')
 
     id = db.Column(db.Integer, db.Sequence('users_id_seq'), primary_key=True)
-    fb_id = db.Column(db.Unicode(255), nullable=False, unique=True)
+    fb_id = db.Column(db.Unicode(255), nullable=True, unique=True)
+    password = db.Column(db.String(88), nullable=True)
     name = db.Column(db.Unicode(300), nullable=False)
     email = db.Column(db.Unicode(254), nullable=False)
     created = db.Column(db.TIMESTAMP, nullable=False)
@@ -74,10 +75,11 @@ class Users(db.Model, UserMixin):
         'Comments', backref='user', lazy='dynamic'
     )
 
-    def __init__(self, fb_id, name, email, auth_key):
+    def __init__(self, name, email, auth_key=None, fb_id=None, password=None):
         self.fb_id = fb_id
         self.name = name
         self.email = email
+        self.password = password
         self.auth_key = auth_key
         self.active = True
         self.created = datetime.datetime.now()
