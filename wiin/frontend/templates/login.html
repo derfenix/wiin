@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Login - {% endblock %}
+
+{% block content %}
+    <h1>Sign In</h1>
+    <form action="" method="post" name="login">
+        {% from "_helpers.html" import render_field %}
+        <div>
+            <input type="button" value="Login with facebook"/>
+
+            <div style="float: left">
+                {{ render_field(form.email) }}
+            </div>
+        </div>
+        <div style="clear: both">
+            {{ render_field(form.password) }}
+        </div>
+
+        <p>
+            <input type="submit" value="Sign In">
+            Don't have an account yet?
+            <a href="{{ url_for('registration') }}">Create one now!</a>
+        </p>
+    </form>
+{% endblock content %}

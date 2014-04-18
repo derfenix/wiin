@@ -12,6 +12,7 @@ from flask import Flask
 from flask.ext import restful
 import flask.ext.restless
 from flask.ext.sqlalchemy import SQLAlchemy
+from wiin.frontend.auth import login_manager
 
 
 prefix = getattr(sys, "prefix")
@@ -20,7 +21,8 @@ if prefix == '/usr':
 config = ConfigParser.ConfigParser()
 config.read(['wiin.cfg', prefix + '/etc/wiin.cfg'])
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="frontend/templates/", static_folder='frontend/static/',
+            static_url_path='/static')
 
 app.config['SECRET_KEY'] = config.get('Main', 'SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = config.get('Main', 'SQLALCHEMY_DATABASE_URI')
@@ -39,8 +41,10 @@ app.config['FACEBOOK'] = {
     'consumer_secret': config.get('FACEBOOK', 'consumer_secret')
 }
 
+
 api = restful.Api(app)
 db = SQLAlchemy(app)
+login_manager.init_app(app)
 
 manager = flask.ext.restless.APIManager(
     app, flask_sqlalchemy_db=db,

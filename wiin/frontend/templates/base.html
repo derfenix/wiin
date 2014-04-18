@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock title %}WIIN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='core.js') }}"></script>
+<script>
+    $(function () {
+        window.flash = new Flash();
+        {% with messages = get_flashed_messages(1) %}
+            {% if messages %}
+                    {% for cat, message in messages %}
+                        flash.insert('{{ message }}', '{{ cat }}');
+                    {% endfor %}
+            {% endif %}
+        {% endwith %}
+    });
+</script>
+
+{% block content %}{% endblock content %}
+
+</body>
+</html>

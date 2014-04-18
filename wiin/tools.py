@@ -34,7 +34,7 @@ def auth_func(*args, **kwargs):
 
 
 @app.route('/api/v1/login')
-def login():
+def api_login():
     args = dict(client_id=app.config.get('FACEBOOK')['consumer_key'],
                 redirect_uri=request.url)
     if request.args.get('code'):

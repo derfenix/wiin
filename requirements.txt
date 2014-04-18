@@ -6,4 +6,5 @@ flask>=0.10
 python_dateutil>2.0
 mimerender>=0.5.2
 Flask_SQLAlchemy
+jinja2>=2.7
 -e git+https://github.com/pythonforfacebook/facebook-sdk.git#egg=facebook_sdk

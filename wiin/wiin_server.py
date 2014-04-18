@@ -11,6 +11,8 @@ from wiin.init import manager, app
 # noinspection PyUnresolvedReferences
 import wiin.models
 from wiin.tools import build_api
+# noinspection PyUnresolvedReferences
+from wiin.frontend.views import *
 import sys
 
 build_api(manager)
