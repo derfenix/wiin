@@ -31,6 +31,8 @@ class RegistrationForm(Form):
         if not rv:
             return False
 
-        if User.email_registred(self.email.data).first():
+        if User.email_registred(self.email.data):
+            print 2
             self.email.errors.append('Email already registred!')
             return False
+        return True

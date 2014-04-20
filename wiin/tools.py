@@ -37,6 +37,10 @@ def auth_func(*args, **kwargs):
 
 @app.route('/api/v1/login')
 def api_login():
+    return _fb_login()
+
+
+def _fb_login():
     args = dict(client_id=app.config.get('FACEBOOK')['consumer_key'],
                 redirect_uri=request.url)
     if request.args.get('code'):
@@ -58,9 +62,21 @@ def api_login():
 
         users = get_model('Users')
         user = users.query.filter_by(fb_id=str(profile['id'])).first()
-        if user:
+
+        if user:  # FB account already registred
             user.auth_key = access_token
-        else:
+        else:  # New FB account
+            # Test is FB account's email already registred
+            if users.query.filter_by(email=profile['email']).first():
+                # Only uniqie emails are allowed, return error
+                return json.dumps(
+                    {
+                        'status': False,
+                        'code': 115,
+                        'message': "This email already registred"}
+                ), 409
+
+            # E-mail is unique, create new user
             user = users(fb_id=str(profile["id"]), name=profile["name"], email=profile['email'],
                          auth_key=access_token)
 
@@ -171,4 +187,4 @@ def make_password(raw_password, salt=None):
 def check_password(password_from_db, raw_string):
     _algo, salt, password_hash = password_from_db.split(':')
     password = make_password(raw_string, salt)
-    return password == password_hash
+    return password == password_from_db

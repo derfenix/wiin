@@ -2,3 +2,11 @@ body {
   background-color: #dedede;
   font-size: 90%;
   color: #222222; }
+
+header {
+  padding: 3px 20px;
+  margin: 10px 0;
+  background-color: #e8e8e8; }
+  header .username {
+    font-weight: bold;
+    font-style: italic; }

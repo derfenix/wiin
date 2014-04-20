@@ -12,13 +12,18 @@
         window.flash = new Flash();
         {% with messages = get_flashed_messages(1) %}
             {% if messages %}
-                    {% for cat, message in messages %}
-                        flash.insert('{{ message }}', '{{ cat }}');
-                    {% endfor %}
+                {% for cat, message in messages %}
+                    flash.insert('{{ message }}', '{{ cat }}');
+                {% endfor %}
             {% endif %}
         {% endwith %}
     });
 </script>
+<header>
+    {% if current_user %}
+        <span class="username">Hello, {{ current_user.name }}</span>
+    {% endif %}
+</header>
 
 {% block content %}{% endblock content %}
 

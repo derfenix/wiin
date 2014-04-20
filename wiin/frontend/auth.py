@@ -36,6 +36,7 @@ class User(UserMixin):
             return None
 
         if not check_password(user.password, password):
+            print 1
             return None
 
         return User(user)

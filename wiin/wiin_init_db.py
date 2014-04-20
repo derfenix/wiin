@@ -10,7 +10,18 @@ from wiin.models import *
 
 
 def migration1():
-    db.engine.execute("ALTER TABLE users ADD password VARCHAR(90)", bind='db1')
+    m = [
+        "ALTER TABLE users ADD password VARCHAR(90)",
+        "ALTER TABLE users ALTER COLUMN fb_id DROP NOT NULL",
+        "ALTER TABLE users ALTER COLUMN auth_key DROP NOT NULL",
+    ]
+
+    for i in m:
+        try:
+            db.engine.execute(i, bind='db1')
+        except Exception as e:
+            print e
+
 
 if __name__ == "__main__":
     db.create_all(bind='db1')
