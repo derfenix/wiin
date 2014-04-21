@@ -14,14 +14,22 @@
 
     Flash.prototype.init = function() {
       $("<div id='" + this.element + "'></div>").appendTo('body');
-      return this.obj = $('#' + this.element);
+      this.obj = $('#' + this.element);
+      return this.obj.show();
     };
 
     Flash.prototype.insert = function(message, level) {
+      var e;
       if (level == null) {
         level = 'message';
       }
-      return this.obj.append("<div class='flash_item " + level + "'>" + message + "</div>");
+      e = $("<div class='flash_item " + level + "'>" + message + "</div>").appendTo(this.obj);
+      window.setTimeout(function() {
+        return $(e).hide(300);
+      }, 2000);
+      return window.setTimeout(function() {
+        return $(e).detach();
+      }, 2300);
     };
 
     return Flash;

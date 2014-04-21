@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Create new brand - {% endblock %}
+
+{% block content %}
+    <h1>Create new brand</h1>
+    <form action="" method="post" name="posts_add" enctype="multipart/form-data">
+        {% from "_helpers.html" import render_field %}
+        {% for field in form %}
+            {{ render_field(field, style="width:500px") }}
+        {% endfor %}
+        <div>
+            <input type="submit" value="Save">
+            {#            <input type="button" value="Cancel"#}
+            {#                   onclick="window.location.href='{{ url_for('posts_list', brand_id=brand_id) }}'"/>#}
+        </div>
+    </form>
+{% endblock content %}

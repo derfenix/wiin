@@ -8,7 +8,8 @@
         {{ form.csrf_token }}
         {% from "_helpers.html" import render_field %}
         <div>
-            <input type="button" value="Login with facebook"/>
+            <input type="button" value="Login with facebook" onclick="document.location
+                    .href='{{ url_for('fb_login') }}'"/>
 
             <div style="float: left">
                 {{ render_field(form.email) }}
@@ -21,7 +22,7 @@
         <p>
             <input type="submit" value="Sign In">
             Don't have an account yet?
-            <a href="{{ url_for('registration') }}">Create one now!</a>
+            <a href="{{ url_for('signup') }}">Create one now!</a>
         </p>
     </form>
 {% endblock content %}

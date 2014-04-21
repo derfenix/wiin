@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Posts list {% if brand %}for '{{ brand.name }}`{% endif %}-
+{% endblock %}
+
+{% block content %}
+    {% if not brand %}
+        <h1>Managed brands</h1>
+        {% for b in brands %}
+            <a href="{{ url_for('posts_list', brand_id=b.id) }}">{{ b.name }}</a>
+            &nbsp;&nbsp;
+        {% endfor %}
+        <hr/>
+        <h1>Last posts</h1>
+    {% else %}
+        <h1>{{ brand.name|title }}'s posts</h1>
+        {% if brand.managed %}
+            <a href="{{ url_for('posts_add', brand_id=brand.id) }}">Add post
+                for {{ brand.name }}</a>
+        {% endif %}
+        <hr/>
+    {% endif %}
+    {% for post in posts %}
+        <div class="post_item"
+                {% if post.brand.managed %}
+             onclick="document.location.href=
+                     '{{ url_for('posts_add', brand_id=post.brand_id, post_id=post.id) }}'"
+             style="cursor: pointer"
+                {% endif %}>
+        <h3>{{ post.title }}</h3>
+            <small>
+                {% if not brand %}for {{ post.brand.name }}{% endif %}
+            </small>
+            <div class="meta">
+                Created: {{ post.created }} <br/>
+                Publish at: {{ post.publish_at }} <br/>
+                {% if post.url %}
+                    URL: <a href="{{ post.url }}">{{ post.url|truncate(30, 1) }}</a><br/>
+                {% endif %}
+                {% if post.image_url %}
+                    Image: <a href="{{ post.image_url }}">{{ post.image_url|truncate(30, 1) }}</a>
+                {% endif %}
+            </div>
+            {% if post.text %}
+                {{ post.text|truncate(100) }}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock content %}

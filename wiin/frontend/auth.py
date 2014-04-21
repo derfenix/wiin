@@ -9,22 +9,31 @@ from flask.ext.login import UserMixin
 
 from wiin.models import Users
 from wiin.init import login_manager, db
-
 from wiin.tools import make_password, check_password
 
 
 class User(UserMixin):
     def __init__(self, u):
+        self.user = u
         self.id = u.id
         self.email = u.email
         self.name = u.name
         self.active = u.active
+        self.fb_id = u.fb_id
+        self.auth_key = u.auth_key
+        self.admin = u.admin
 
     def is_active(self):
         return self.active
 
     @staticmethod
     def get(userid):
+        """
+        :param userid:
+        :type userid: int
+        :return: User instance
+        :rtype: User
+        """
         user = Users.query.filter_by(id=userid).first()
         return User(user)
 
@@ -36,7 +45,6 @@ class User(UserMixin):
             return None
 
         if not check_password(user.password, password):
-            print 1
             return None
 
         return User(user)

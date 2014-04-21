@@ -8,14 +8,17 @@
         {{ form.csrf_token }}
         {% from "_helpers.html" import render_field %}
         <p>
-                {{ render_field(form.name) }}
+            {{ render_field(form.name) }}
         </p>
+
         <p>
-                {{ render_field(form.email) }}
+            {{ render_field(form.email) }}
         </p>
+
         <p>
-                {{ render_field(form.password) }}
+            {{ render_field(form.password) }}
         </p>
+
         <p>
             {{ render_field(form.password2) }}
         </p>

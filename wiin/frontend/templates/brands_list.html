@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Brands list - {% endblock %}
+
+{% block content %}
+    <script type="text/javascript">
+        function brands_switch_managed(url) {
+            $.post(url, function (res) {
+                if (!res.status) {
+                    alert("Switching failed!")
+                }
+            });
+        }
+    </script>
+    <h1>Brands list</h1>
+    {% for brand in brands %}
+        <div class="brand_item">
+            <div style="float: left">
+                <img src="{{ brand.profile_url }}" alt="brand logo" style="max-height: 40px"/>
+            </div>
+            <div style="float:right">
+                {% if brand.fb_id and brand.has_rights() %}
+                    <label for="managed_{{ brand_id }}">Load FB posts</label>
+                    <input type="checkbox" id="managed_{{ brand_id }}"
+                           {% if not brand.managed %}checked="checked"{% endif %}
+                           onclick="brands_switch_managed('{{ url_for('brands_switch_managed', brand_id=brand.id) }}')"/>
+                {% endif %}
+            </div>
+            <br style="clear: both"/>
+
+            <h2>{{ brand.name }}</h2>
+            {% if brand.managers.all() %}
+                <h3>Managers</h3>
+                {% for manager in brand.managers.all() %}
+                    <strong><a href="">{{ manager.name }}</a></strong>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock content %}

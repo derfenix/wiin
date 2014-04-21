@@ -10,12 +10,13 @@ from wiin.init import manager, config
 
 # noinspection PyUnresolvedReferences
 import wiin.models
-from wiin.tools import build_api
+from wiin.tools import build_api, generate_csrf_token
 # noinspection PyUnresolvedReferences
 from wiin.frontend.views import *
 import sys
 
 build_api(manager)
+app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 host = None
 port = None

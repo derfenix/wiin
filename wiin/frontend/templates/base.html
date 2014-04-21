@@ -9,9 +9,9 @@
 <script type="text/javascript" src="{{ url_for('static', filename='core.js') }}"></script>
 <script>
     $(function () {
-        window.flash = new Flash();
         {% with messages = get_flashed_messages(1) %}
             {% if messages %}
+                window.flash = new Flash();
                 {% for cat, message in messages %}
                     flash.insert('{{ message }}', '{{ cat }}');
                 {% endfor %}
@@ -23,9 +23,32 @@
     {% if current_user %}
         <span class="username">Hello, {{ current_user.name }}</span>
     {% endif %}
+    <nav>
+        {% if current_user.is_anonymous() %}
+            <a href="{{ url_for('login') }}">Log in</a>
+        {% else %}
+            <a href="{{ url_for('logout') }}?csrf_token={{ csrf_token() }}">Log out</a>
+        {% endif %}
+    </nav>
 </header>
 
-{% block content %}{% endblock content %}
+<aside>
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('posts_list') }}">Posts</a>
+        </li>
+        <li>
+            <a href="{{ url_for('brands_list') }}">Brands</a>
+        </li>
+    </ul>
+</aside>
+
+<div id="body">
+    {% block content %}{% endblock content %}
+</div>
 
 </body>
 </html>

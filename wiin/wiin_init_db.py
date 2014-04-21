@@ -9,11 +9,10 @@
 from wiin.models import *
 
 
-def migration1():
+def initial_data():
     m = [
-        "ALTER TABLE users ADD password VARCHAR(90)",
-        "ALTER TABLE users ALTER COLUMN fb_id DROP NOT NULL",
-        "ALTER TABLE users ALTER COLUMN auth_key DROP NOT NULL",
+        "INSERT INTO users (id, fb_id, password, name, email, created, auth_key, active, admin) VALUES (nextval('users_id_seq'), null, 'sha256:YxFYVQwg8bnk1HN4:d459bc969d0e231e0896568be9b4530d881b6b389a869fb72b4e5311d808b67f', 'admin', 'admin@admin.ad', '2014-04-21 17:22:03.528', null, true, true)"
+
     ]
 
     for i in m:
@@ -24,5 +23,6 @@ def migration1():
 
 
 if __name__ == "__main__":
+    db.drop_all(bind='db1')
     db.create_all(bind='db1')
-    migration1()
+    initial_data()

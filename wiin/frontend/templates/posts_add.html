@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Create new post - {% endblock %}
+
+{% block content %}
+    <h1>Create new post</h1>
+    <form action="" method="post" name="posts_add" enctype="multipart/form-data">
+        {% from "_helpers.html" import render_field %}
+        {% for field in form %}
+            {{ render_field(field, style="width:500px") }}
+        {% endfor %}
+        <div>
+            <input type="submit" value="Save">
+            <input type="button" value="Cancel"
+                   onclick="window.location.href='{{ url_for('posts_list', brand_id=brand_id) }}'"/>
+        </div>
+    </form>
+    {% if form.id.data %}
+        <form action="{{ url_for('posts_delete', post_id=form.id.data) }}" method="post"
+              id="delete_post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        </form>
+        <div style="margin-left: 490px; margin-top: -25px">
+            <a href="javascript:void(0)"
+               onclick="if (window.confirm('Delete post?'))$('#delete_post').submit()">
+                Delete
+            </a>
+        </div>
+    {% endif %}
+{% endblock content %}
