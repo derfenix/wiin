@@ -947,6 +947,56 @@ for Flask Restless</blockquote>
 <p>it is mean, that there is not access_token is not set or is invalid. You should login again and appen received access_token to requests.</p>
 </div>
 </div>
+     <div class="section" id="frontend">
+         <h1>FRONTEND</h1>
+
+         <div class="section" id="id1">
+             <h2>Authorization</h2>
+
+             <p>Login at /login by email/password or via Facebook clicking the <tt
+                     class="docutils literal">Login with facebook</tt> button</p>
+
+             <p>Admin user <tt class="docutils literal">admin@admin.ad</tt>, password <tt
+                     class="docutils literal">admin</tt></p>
+         </div>
+         <div class="section" id="adding-brand">
+             <h2>Adding brand</h2>
+
+             <p><tt class="docutils literal">/brands/add</tt> — available only for admin</p>
+         </div>
+         <div class="section" id="import-group-from-facebook">
+             <h2>Import group from Facebook</h2>
+
+             <p><tt class="docutils literal"><span
+                     class="pre">/brands/add/fb/&lt;group_id&gt;</span></tt> — available only for
+                 admin</p>
+         </div>
+         <div class="section" id="brands-list">
+             <h2>Brands list</h2>
+
+             <p><tt class="docutils literal">/brands</tt> - list of brands. Admin can see all
+                 brands, other users - only these, which are admins in facebooks groups. If
+                 checkbox <tt class="docutils literal">Load FB posts</tt> is checked - for this
+                 brand will imported all post in next part</p>
+         </div>
+         <div class="section" id="import-posts-from-fb-group">
+             <h2>Import posts from FB group</h2>
+
+             <p><tt class="docutils literal">/brands/load_fb_posts</tt> — import posts from all
+                 groups, which have <tt class="docutils literal">Load FB posts</tt> checkbox
+                 checked.</p>
+         </div>
+         <div class="section" id="posts-list-and-editing">
+             <h2>Posts list and editing</h2>
+
+             <p><tt class="docutils literal">/posts</tt> — list of the last posts from all
+                 available brands (all brands for admin, own brands for other).</p>
+
+             <p>Clicking on post, which blog is in managed mode (checkbox <tt
+                     class="docutils literal">Load FB posts</tt> unchecked) will redirect to post
+                 edit post.</p>
+         </div>
+     </div>
  </div>
 
 </div>

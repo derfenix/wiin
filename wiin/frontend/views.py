@@ -287,6 +287,7 @@ def _find_brand_by_name(name):
 @app.route('/brands/add', methods=['GET', 'POST'])
 @app.route('/brands/add/<int:brand_id>', methods=['GET', 'POST'])
 @app.route('/brands/add/fb/<string:name>')
+@login_required
 def brands_add(name=None, brand_id=None):
     """
     Add new brand by FB group name or id
@@ -296,6 +297,9 @@ def brands_add(name=None, brand_id=None):
     :rtype: Response
     :raise NotFound: If group not found
     """
+    if not current_user.admin:
+        raise Forbidden()
+
     brand = None
 
     if name:
@@ -366,6 +370,7 @@ def _brands_add_fb(name):
 
 
 @app.route('/brands/switch_managed/<int:brand_id>', methods=['POST'])
+@login_required
 def brands_switch_managed(brand_id):
     """
     Switch managed status for brand
