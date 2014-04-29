@@ -66,7 +66,7 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.Unicode(254), nullable=False)
     created = db.Column(db.TIMESTAMP, nullable=False)
     auth_key = db.Column(db.Unicode(254))
-    active = db.Column(db.Boolean())
+    active = db.Column(db.Boolean(), default=True)
     admin = db.Column(db.Boolean(), default=False)
     brands_likes = db.relationship(
         'Brands', secondary=brand_likes, backref=db.backref('users_likes', lazy='dynamic'),

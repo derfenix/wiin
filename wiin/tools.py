@@ -45,12 +45,17 @@ def auth_func(*args, **kwargs):
 
 @app.route('/api/v1/login')
 def api_login():
-    return _fb_login()
+    return _fb_login(True)
 
 
-def _fb_login():
+def _fb_login(api_call=False):
+    if api_call:
+        redirect_uri = app.config.get('FACEBOOK').get('api_redirect_url', request.url)
+    else:
+        redirect_uri = app.config.get('FACEBOOK').get('frontend_redirect_url', request.url)
+
     args = dict(client_id=app.config.get('FACEBOOK')['consumer_key'],
-                redirect_uri=request.url, scope='user_groups,email')
+                redirect_uri=redirect_uri, scope='user_groups,email')
     if request.args.get('code'):
         args["client_secret"] = app.config.get('FACEBOOK')['consumer_secret']
         args["code"] = request.args.get("code")

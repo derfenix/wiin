@@ -10,11 +10,15 @@ from wiin.models import *
 
 
 def initial_data():
-    m = [
-        "INSERT INTO users (id, fb_id, password, name, email, created, auth_key, active, admin) VALUES (nextval('users_id_seq'), null, 'sha256:YxFYVQwg8bnk1HN4:d459bc969d0e231e0896568be9b4530d881b6b389a869fb72b4e5311d808b67f', 'admin', 'admin@admin.ad', '2014-04-21 17:22:03.528', null, true, true)"
+    user = Users(
+        'admin', 'admin@admin.ad',
+        password='sha256:YxFYVQwg8bnk1HN4:d459bc969d0e231e0896568be9b4530d881b6b389a869fb72b4e5311d808b67f'
+    )
+    user.admin = True
+    db.session.add(user)
+    db.session.commit()
 
-    ]
-
+    m = []
     for i in m:
         try:
             db.engine.execute(i, bind='db1')

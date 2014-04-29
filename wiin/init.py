@@ -8,6 +8,7 @@
 import ConfigParser
 import sys
 
+import os
 from flask import Flask
 from flask.ext import restful
 from flask.ext.login import LoginManager
@@ -24,7 +25,11 @@ config = ConfigParser.ConfigParser(
 )
 config.read(['wiin.cfg', prefix + '/etc/wiin.cfg'])
 
-app = Flask(__name__, template_folder="frontend/templates/", static_folder='frontend/static/',
+frontend_path = os.path.join(os.path.dirname(__file__), 'frontend')
+templates_path = os.path.join(frontend_path, 'templates')
+static_path = os.path.join(frontend_path, 'static')
+
+app = Flask(__name__, template_folder=templates_path, static_folder=static_path,
             static_url_path='/static')
 
 app.config['SECRET_KEY'] = config.get('Main', 'SECRET_KEY')
@@ -43,7 +48,9 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = config.getboolean(
 )
 app.config['FACEBOOK'] = {
     'consumer_key': config.get('FACEBOOK', 'consumer_key'),
-    'consumer_secret': config.get('FACEBOOK', 'consumer_secret')
+    'consumer_secret': config.get('FACEBOOK', 'consumer_secret'),
+    'frontend_redirect_url': config.get('FACEBOOK', 'frontend_redirect_url'),
+    'api_redirect_url': config.get('FACEBOOK', 'frontend_redirect_url'),
 }
 
 api = restful.Api(app)
