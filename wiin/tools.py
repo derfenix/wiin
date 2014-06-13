@@ -39,8 +39,7 @@ def auth_func(*args, **kwargs):
     # user = users.query.filter_by(auth_key=access_token, id=uid, active=True).first()
 
     if not user:
-        raise ProcessingException(description='Not Authorized',
-                                  code=401)
+        raise ProcessingException('Not Authorized', 401)
 
 
 @app.route('/api/v1/login')
